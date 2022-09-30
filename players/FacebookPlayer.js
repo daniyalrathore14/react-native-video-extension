@@ -21,14 +21,15 @@ const TimePlayed = () => {
   const { mutableState } = useInternalCtx();
   return (<Text style={{ width: 80 }}>{toTimeView(mutableState.currentTime)}</Text>);
 };
-const Poster = () => {
+const Poster = ({videoPoster}) => {
   const { paused,mutableState } = useInternalCtx();
   console.log('mutableState.currentTime',mutableState.currentTime)
   return (
     (paused && mutableState.currentTime <= 0.1) &&
     <FastImage
       source={{
-        uri: "https://miraclemorning-media.s3.amazonaws.com/images/thumbnail/Rennee.jpg"
+        //uri: "https://miraclemorning-media.s3.amazonaws.com/images/thumbnail/Rennee.jpg"
+        uri: videoPoster
       }}
       resizeMode="cover"
       style={{
@@ -47,12 +48,12 @@ const TimeLeft = () => {
     -{toTimeView(duration - mutableState.currentTime)}
   </Text>);
 };
-const FacebookPlayer = forwardRef(({ mode, initialPaused = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar, ...props }, ref) => {
+const FacebookPlayer = forwardRef(({ mode, initialPaused = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar,videoPoster, ...props }, ref) => {
   const { fullscreen } = useVideoCtx();
   return (<VideoContainer mode={mode} aspectRatio={aspectRatio} initialPaused={initialPaused} initialMuted={initialMuted}>
 
     <RNVideo /* style={{ width: '100%', height: '100%' }} */  {...props} ref={ref} />
-    <Poster />
+    <Poster videoPoster={videoPoster}/>
     <Overlay>
       <Center>
         <Replay>{customIcon?.replayIcon}</Replay>
