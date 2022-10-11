@@ -63,7 +63,7 @@ const RNVideo = forwardRef(({ onEnd, onLoad, onProgress, ...props }, ref) => {
         muted={muted}
         paused={paused}
         controls={false}
-        resizeMode={'cover'}
+        
     />);
 });
 export default RNVideo;
