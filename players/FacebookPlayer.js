@@ -21,9 +21,9 @@ const TimePlayed = () => {
   const { mutableState } = useInternalCtx();
   return (<Text style={{ width: 80 }}>{toTimeView(mutableState.currentTime)}</Text>);
 };
-const Poster = ({videoPoster}) => {
-  const { paused,mutableState } = useInternalCtx();
-  console.log('mutableState.currentTime',mutableState.currentTime)
+const Poster = ({ videoPoster }) => {
+  const { paused, mutableState } = useInternalCtx();
+  console.log('mutableState.currentTime', mutableState.currentTime)
   return (
     (paused && mutableState.currentTime <= 0.1) &&
     <FastImage
@@ -48,16 +48,17 @@ const TimeLeft = () => {
     -{toTimeView(duration - mutableState.currentTime)}
   </Text>);
 };
-const FacebookPlayer = forwardRef(({ mode, initialPaused = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar,videoPoster, ...props }, ref) => {
+const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar, videoPoster, ...props }, ref) => {
   const { fullscreen } = useVideoCtx();
+  console.log(props, 'propspropsprops');
   return (<VideoContainer mode={mode} aspectRatio={aspectRatio} initialPaused={initialPaused} initialMuted={initialMuted}>
 
-    <RNVideo /* style={{ width: '100%', height: '100%' }} */  {...props} ref={ref} />
-    <Poster videoPoster={videoPoster}/>
+    <RNVideo /* style={{ width: '100%', height: '100%' }} */ autoPlay={autoPlay}  {...props} ref={ref} />
+    <Poster videoPoster={videoPoster} />
     <Overlay>
       <Center>
         <Replay>{customIcon?.replayIcon}</Replay>
-        <PlayPauseRefresh {...customIcon} />
+        <PlayPauseRefresh autoPlay={autoPlay} {...customIcon} />
         <Forward>{customIcon?.forwardIcon}</Forward>
       </Center>
       <View style={{ flex: 1, alignSelf: 'stretch' }}>
