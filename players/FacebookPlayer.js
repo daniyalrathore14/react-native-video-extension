@@ -23,7 +23,6 @@ const TimePlayed = () => {
 };
 const Poster = ({ videoPoster }) => {
   const { paused, mutableState } = useInternalCtx();
-  console.log('mutableState.currentTime', mutableState.currentTime)
   return (
     (paused && mutableState.currentTime <= 0.1) &&
     <FastImage

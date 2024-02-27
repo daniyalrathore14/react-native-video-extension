@@ -25,7 +25,6 @@ const RNVideo = forwardRef(({ onEnd, onLoad, autoPlay, onProgress, ...props }, r
         onEnd?.();
         setState({ ended: true });
     }} onReadyForDisplay={() => {
-        console.log('here');
         setLoading(false);
         if (Platform.OS === "android" && instanceRef?.current == 0) {
             setPaused(true);
@@ -43,7 +42,6 @@ const RNVideo = forwardRef(({ onEnd, onLoad, autoPlay, onProgress, ...props }, r
 
     }}
         onLoad={(data) => {
-            console.log('loading....')
             if (Platform.OS === "android") {
                 setPaused(false);
             }
@@ -61,7 +59,7 @@ const RNVideo = forwardRef(({ onEnd, onLoad, autoPlay, onProgress, ...props }, r
         }}
 
         muted={muted}
-        paused={!autoPlay ? paused : !paused}
+        paused={(Platform.OS === 'android' && !autoPlay) ? paused : !autoPlay ? paused : false}
         controls={false}
 
     />);
