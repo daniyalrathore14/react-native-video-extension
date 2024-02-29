@@ -1,5 +1,4 @@
-import { setPushNotificationsEnabled } from 'instabug-reactnative';
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import { Platform } from 'react-native';
 import Video from 'react-native-video';
 import { useInternalCtx } from '../InternalCtx';
@@ -23,11 +22,17 @@ const RNVideo = forwardRef(({ onEnd, onLoad, autoPlay, onProgress, ...props }, r
         }
     }} onEnd={() => {
         onEnd?.();
-        setState({ ended: true });
+        setState({ ended: true })
+
     }} onReadyForDisplay={() => {
         setLoading(false);
         if (Platform.OS === "android" && instanceRef?.current == 0) {
             setPaused(true);
+            if (autoPlay) {
+                setTimeout(() => {
+                    setPaused(false)
+                }, 1000);
+            }
             instanceRef.current++
         }
         /*  if (Platform.OS === "android") {
@@ -59,7 +64,7 @@ const RNVideo = forwardRef(({ onEnd, onLoad, autoPlay, onProgress, ...props }, r
         }}
 
         muted={muted}
-        paused={(Platform.OS === 'android' && !autoPlay) ? paused : !autoPlay ? paused : false}
+        paused={(Platform.OS === 'android' && !autoPlay) ? paused : !autoPlay ? paused : (Platform.OS === 'ios' && autoPlay) ? !paused : paused}
         controls={false}
 
     />);

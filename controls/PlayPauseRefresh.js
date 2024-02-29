@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, } from 'react-native';
-import { SvgPause, SvgPlayArrow, SvgRefresh } from '../icons';
-import { useVideoCtx } from '../ScreenContainer';
+import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { useInternalCtx } from '../InternalCtx';
+import { useVideoCtx } from '../ScreenContainer';
+import { SvgPause, SvgPlayArrow, SvgRefresh } from '../icons';
 const PlayPauseRefresh = ({ style, onPress, autoPlay, playIcon, pauseIcon, refreshIcon, ...props }) => {
     const { fullscreen, isLandscape } = useVideoCtx();
     const { videoInstance, ended, setState, paused, setPaused, } = useInternalCtx();
@@ -19,7 +19,19 @@ const PlayPauseRefresh = ({ style, onPress, autoPlay, playIcon, pauseIcon, refre
     }} style={calculatedStyle} {...props}>
         {refreshIcon ?? <SvgRefresh />}
     </TouchableOpacity>) : (<TouchableOpacity style={calculatedStyle} onPress={() => setPaused((bool) => !bool)}>
-        {(!autoPlay && paused) || (autoPlay && !paused) ? playIcon ?? <SvgPlayArrow /> : pauseIcon ?? <SvgPause />}
+        <>
+            {
+                Platform.OS === 'ios' ?
+                    ((!autoPlay && paused) || (autoPlay && !paused) ? playIcon ?? <SvgPlayArrow /> : pauseIcon ?? <SvgPause />) :
+                    !autoPlay ? (
+                        paused ? playIcon ?? <SvgPlayArrow /> : pauseIcon ?? <SvgPause />
+                    ) :
+                        (
+                            paused ? playIcon ?? <SvgPlayArrow /> : pauseIcon ?? <SvgPause />
+                        )
+            }
+
+        </>
     </TouchableOpacity>);
 };
 const styles = StyleSheet.create({
@@ -34,3 +46,4 @@ const styles = StyleSheet.create({
     },
 });
 export default PlayPauseRefresh;
+ 
