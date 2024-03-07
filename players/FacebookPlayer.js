@@ -49,7 +49,6 @@ const TimeLeft = () => {
 };
 const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar, videoPoster, ...props }, ref) => {
   const { fullscreen } = useVideoCtx();
-  console.log(props, 'propspropsprops');
   return (<VideoContainer mode={mode} aspectRatio={aspectRatio} initialPaused={initialPaused} initialMuted={initialMuted}>
 
     <RNVideo /* style={{ width: '100%', height: '100%' }} */ autoPlay={autoPlay}  {...props} ref={ref} />

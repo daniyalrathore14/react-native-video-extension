@@ -57,7 +57,6 @@ const RNVideo = forwardRef(({ onEnd, onLoad, autoPlay, onProgress, ...props }, r
             onProgress?.(data);
             setState({ ended: false, bufferTime: data.playableDuration });
             if (!seekerRef.progressStopped) {
-                // console.log('currentTime', data.currentTime);
                 mutableState.currentTime = data.currentTime;
                 seekerRef.seek?.(data.currentTime / duration);
             }
