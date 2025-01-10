@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Platform, TouchableOpacity, View } from 'react-native';
 import withDefaultScreenContainer from '../DefaultScreenContainer';
 import { toTimeView } from '../utils';
 import Overlay from '../controls/Overlay';
@@ -63,10 +63,12 @@ const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = fal
         {renderToolbar?.(fullscreen)}
         <View style={{ flex: 1 }} />
         <View style={{
-          width: '100%',
+          width: mode == 'contain' ? '100%' : '90%',
           flexDirection: 'row',
           alignItems: 'center',
           marginBottom: fullscreen ? 30 : 30,
+          alignSelf: "center",
+          left: Platform.OS == 'ios' ? 0 : 10
         }}>
           <TimePlayed />
           <EnhancedSeeker mode={mode} config={{
