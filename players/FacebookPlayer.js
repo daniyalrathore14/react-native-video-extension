@@ -47,7 +47,7 @@ const TimeLeft = () => {
     -{toTimeView(duration - mutableState.currentTime)}
   </Text>);
 };
-const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar, videoPoster, ...props }, ref) => {
+const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar, videoPoster, progressStyle, ...props }, ref) => {
   const { fullscreen } = useVideoCtx();
   return (<VideoContainer mode={mode} aspectRatio={aspectRatio} initialPaused={initialPaused} initialMuted={initialMuted}>
 
@@ -62,13 +62,13 @@ const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = fal
       <View style={{ flex: 1, alignSelf: 'stretch' }}>
         {renderToolbar?.(fullscreen)}
         <View style={{ flex: 1 }} />
-        <View style={{
-          width: mode == 'contain' ? '100%' : '90%',
+        <View style={[{
+          width: '100%',
           flexDirection: 'row',
           alignItems: 'center',
           marginBottom: fullscreen ? 30 : 30,
           alignSelf: "center",
-        }}>
+        }, progressStyle]}>
           <TimePlayed />
           <EnhancedSeeker mode={mode} config={{
             buttonColor: '#fff',

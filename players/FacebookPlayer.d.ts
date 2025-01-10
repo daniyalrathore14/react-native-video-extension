@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { ViewStyle } from 'react-native'
 import Video from 'react-native-video';
 import { AspectRatio } from '../utils';
 import { RNVideoProps } from '../Video/RNVideo';
@@ -12,9 +13,11 @@ export declare type FacebookPlayerProps = {
     mode: 'auto-fit' | 'contain';
     customIcon?: IconConfig;
     renderToolbar?: (fullscreen: false | FullscreenOrientation) => ReactNode;
+    progressStyle?: ViewStyle
 } & RNVideoProps;
 declare const _default: {
     (props: {
+        progressStyle?,
         initialPaused?: boolean | undefined;
         initialMuted?: boolean | undefined;
         aspectRatio?: number | "landscape" | "portrait" | undefined;
