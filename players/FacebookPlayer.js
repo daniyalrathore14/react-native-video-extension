@@ -68,7 +68,6 @@ const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = fal
           alignItems: 'center',
           marginBottom: fullscreen ? 30 : 30,
           alignSelf: "center",
-          left: Platform.OS == 'ios' ? 0 : 10
         }}>
           <TimePlayed />
           <EnhancedSeeker mode={mode} config={{
