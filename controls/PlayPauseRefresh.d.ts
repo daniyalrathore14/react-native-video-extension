@@ -4,6 +4,7 @@ export declare type PlayPauseProps = {
     playIcon?: ReactElement;
     pauseIcon?: ReactElement;
     refreshIcon?: ReactElement;
+    callback?: () => void
 } & TouchableOpacityProps;
-declare const PlayPauseRefresh: ({ style, onPress, playIcon, pauseIcon, refreshIcon, ...props }: PlayPauseProps) => JSX.Element;
+declare const PlayPauseRefresh: ({ style, onPress, playIcon, pauseIcon, refreshIcon, callback, ...props }: PlayPauseProps) => JSX.Element;
 export default PlayPauseRefresh;

@@ -3,7 +3,7 @@ import { Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { useInternalCtx } from '../InternalCtx';
 import { useVideoCtx } from '../ScreenContainer';
 import { SvgPause, SvgPlayArrow, SvgRefresh } from '../icons';
-const PlayPauseRefresh = ({ style, onPress, autoPlay, playIcon, pauseIcon, refreshIcon, ...props }) => {
+const PlayPauseRefresh = ({ style, onPress, autoPlay, playIcon, pauseIcon, refreshIcon, callback, ...props }) => {
     const { fullscreen, isLandscape } = useVideoCtx();
     const { videoInstance, ended, setState, paused, setPaused, } = useInternalCtx();
     const buttonStyle = fullscreen
@@ -18,7 +18,10 @@ const PlayPauseRefresh = ({ style, onPress, autoPlay, playIcon, pauseIcon, refre
         setState({ ended: false });
     }} style={calculatedStyle} {...props}>
         {refreshIcon ?? <SvgRefresh />}
-    </TouchableOpacity>) : (<TouchableOpacity style={calculatedStyle} onPress={() => setPaused((bool) => !bool)}>
+    </TouchableOpacity>) : (<TouchableOpacity style={calculatedStyle} onPress={() => {
+        setPaused((bool) => !bool)
+        callback && callback()
+    }}>
         <>
             {
                 Platform.OS === 'ios' ?
@@ -46,4 +49,3 @@ const styles = StyleSheet.create({
     },
 });
 export default PlayPauseRefresh;
- 
