@@ -14,13 +14,12 @@ export const InternalProvider = ({ initialPaused = false, initialMuted = false, 
     const { setSeeking } = useVideoCtx();
     const [paused, setPaused] = useState(Platform.OS === "ios" ? true : initialPaused);
     const [muted, setMuted] = useState(initialMuted);
-    /* useEffect(() => {
-        if (Platform.OS === "ios") {
-            setTimeout(() => {
-                setPaused(false);
-            }, 100)
-        }
-    },[]) */
+    useEffect(() => {
+        setTimeout(() => {
+            setPaused(initialPaused);
+        }, 100)
+    }, [initialPaused])
+
     const seekerRef = useRef({}).current;
     const [{ duration, bufferTime, ended }, setState] = useReducer((s, a) => ({ ...s, ...a }), {
         duration: 0,

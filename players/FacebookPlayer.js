@@ -47,16 +47,19 @@ const TimeLeft = () => {
     -{toTimeView(duration - mutableState.currentTime)}
   </Text>);
 };
-const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar, videoPoster, progressStyle, ...props }, ref) => {
+const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar, videoPoster, progressStyle, renderCustomButtons, callback, ...props }, ref) => {
   const { fullscreen } = useVideoCtx();
   return (<VideoContainer mode={mode} aspectRatio={aspectRatio} initialPaused={initialPaused} initialMuted={initialMuted}>
 
     <RNVideo /* style={{ width: '100%', height: '100%' }} */ autoPlay={autoPlay}  {...props} ref={ref} />
     <Poster videoPoster={videoPoster} />
     <Overlay>
+      {renderCustomButtons && <View>
+        {renderCustomButtons()}
+      </View>}
       <Center>
         <Replay>{customIcon?.replayIcon}</Replay>
-        <PlayPauseRefresh autoPlay={autoPlay} {...customIcon} />
+        <PlayPauseRefresh autoPlay={autoPlay} {...customIcon} callback={callback} />
         <Forward>{customIcon?.forwardIcon}</Forward>
       </Center>
       <View style={{ flex: 1, alignSelf: 'stretch' }}>
