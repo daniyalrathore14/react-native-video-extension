@@ -5,6 +5,7 @@ import { toTimeView } from '../utils';
 import Overlay from '../controls/Overlay';
 import EnhancedSeeker from '../Seeker/EnhancedSeeker';
 import Center from '../Section/Center';
+import Top from '../Section/Top';
 import FullscreenToggle from '../controls/FullscreenToggle';
 import PlayPauseRefresh from '../controls/PlayPauseRefresh';
 import Replay from '../controls/Replay';
@@ -47,16 +48,16 @@ const TimeLeft = () => {
     -{toTimeView(duration - mutableState.currentTime)}
   </Text>);
 };
-const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar, videoPoster, progressStyle, renderCustomButtons, callback, ...props }, ref) => {
+const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = false, initialMuted = false, aspectRatio = 'landscape', customIcon, renderToolbar, videoPoster, progressStyle, renderCustomButtons, callback, customButtonStyle, ...props }, ref) => {
   const { fullscreen } = useVideoCtx();
   return (<VideoContainer mode={mode} aspectRatio={aspectRatio} initialPaused={initialPaused} initialMuted={initialMuted}>
 
-    <RNVideo /* style={{ width: '100%', height: '100%' }} */ autoPlay={autoPlay}  {...props} ref={ref} />
+    <RNVideo aspectRatio={aspectRatio} autoPlay={autoPlay}  {...props} ref={ref} />
     <Poster videoPoster={videoPoster} />
     <Overlay>
-      {renderCustomButtons && <View>
+      {renderCustomButtons && <Top>
         {renderCustomButtons()}
-      </View>}
+      </Top>}
       <Center>
         <Replay>{customIcon?.replayIcon}</Replay>
         <PlayPauseRefresh autoPlay={autoPlay} {...customIcon} callback={callback} />
@@ -87,7 +88,7 @@ const FacebookPlayer = forwardRef(({ mode, initialPaused = false, autoPlay = fal
           }} />
           <TimeLeft />
           <VolumeToggle {...customIcon} />
-          <FullscreenToggle {...customIcon} />
+          {/* <FullscreenToggle {...customIcon} /> */}
         </View>
       </View>
     </Overlay>

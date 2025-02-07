@@ -3,7 +3,8 @@ import { Platform } from 'react-native';
 import Video from 'react-native-video';
 import { useInternalCtx } from '../InternalCtx';
 import { useVideoCtx } from '../ScreenContainer';
-const RNVideo = forwardRef(({ onEnd, onLoad, autoPlay, onProgress, ...props }, ref) => {
+const RNVideo = forwardRef(({ aspectRatio,
+    onEnd, onLoad, autoPlay, onProgress, ...props }, ref) => {
     const { videoInstance, setState, mutableState, seekerRef, duration, paused, muted, setPaused } = useInternalCtx();
     const { setIsLandscape, setLoading } = useVideoCtx();
     const instanceRef = useRef(0);
@@ -52,7 +53,7 @@ const RNVideo = forwardRef(({ onEnd, onLoad, autoPlay, onProgress, ...props }, r
             }
             onLoad?.(data);
             setState({ ended: false, duration: data.duration });
-            setIsLandscape(data.naturalSize.orientation === 'landscape');
+            setIsLandscape(aspectRatio === 'landscape' ? 'landscape' : 'portrait');
         }} onProgress={(data) => {
             onProgress?.(data);
             setState({ ended: false, bufferTime: data.playableDuration });
