@@ -18,6 +18,7 @@ export declare type FacebookPlayerProps = {
 } & RNVideoProps;
 declare const _default: {
     (props: {
+        jumpToDuration?: number | undefined;
         progressStyle?,
         initialPaused?: boolean | undefined;
         initialMuted?: boolean | undefined;

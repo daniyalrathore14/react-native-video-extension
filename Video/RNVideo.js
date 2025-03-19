@@ -1,14 +1,19 @@
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import Video from 'react-native-video';
 import { useInternalCtx } from '../InternalCtx';
 import { useVideoCtx } from '../ScreenContainer';
-const RNVideo = forwardRef(({ aspectRatio,
+const RNVideo = forwardRef(({ jumpToDuration, aspectRatio,
     onEnd, onLoad, autoPlay, onProgress, ...props }, ref) => {
     const { videoInstance, setState, mutableState, seekerRef, duration, paused, muted, setPaused } = useInternalCtx();
     const { setIsLandscape, setLoading } = useVideoCtx();
     const instanceRef = useRef(0);
-    //setPaused(false);
+    const mainVideoRef = useRef(null);
+    useEffect(() => {
+        if (mainVideoRef.current && jumpToDuration) {
+            mainVideoRef.current.seek(jumpToDuration)
+        }
+    }, [mainVideoRef, jumpToDuration])
     return (<Video {...props} ref={(videoRef) => {
         if (ref) {
             if (typeof ref === 'function') {
@@ -21,6 +26,7 @@ const RNVideo = forwardRef(({ aspectRatio,
         if (videoRef) {
             videoInstance.current = videoRef;
         }
+        mainVideoRef.current = videoRef
     }} onEnd={() => {
         onEnd?.();
         setState({ ended: true })
