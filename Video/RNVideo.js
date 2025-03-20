@@ -6,14 +6,18 @@ import { useVideoCtx } from '../ScreenContainer';
 const RNVideo = forwardRef(({ jumpToDuration, aspectRatio,
     onEnd, onLoad, autoPlay, onProgress, ...props }, ref) => {
     const { videoInstance, setState, mutableState, seekerRef, duration, paused, muted, setPaused } = useInternalCtx();
-    const { setIsLandscape, setLoading } = useVideoCtx();
+    const { setIsLandscape, setLoading, loading } = useVideoCtx();
     const instanceRef = useRef(0);
     const mainVideoRef = useRef(null);
+    const isSeekProgressCalled = useRef(false)
     useEffect(() => {
-        if (mainVideoRef.current && jumpToDuration) {
-            mainVideoRef.current.seek(jumpToDuration)
+        if (mainVideoRef.current && jumpToDuration && loading === false && isSeekProgressCalled.current == false) {
+            setTimeout(() => {
+                mainVideoRef.current.seek(jumpToDuration)
+            }, 600);
+            isSeekProgressCalled.current = true
         }
-    }, [mainVideoRef, jumpToDuration])
+    }, [mainVideoRef, jumpToDuration, loading])
     return (<Video {...props} ref={(videoRef) => {
         if (ref) {
             if (typeof ref === 'function') {
