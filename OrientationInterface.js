@@ -52,9 +52,9 @@ const useOrientationEffect = ({ fullscreen, setFullscreen, isLandscape, }) => {
                 setFullscreen(width > height ? 'LANDSCAPE-LEFT' : false);
             }
         }
-        Dimensions.addEventListener('change', handleOrientation);
+        const subribeEvent = Dimensions.addEventListener('change', handleOrientation);
         return () => {
-            Dimensions.removeEventListener('change', handleOrientation);
+            subribeEvent.remove()
         };
     }, [setFullscreen]);
 };
