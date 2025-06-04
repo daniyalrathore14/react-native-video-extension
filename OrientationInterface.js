@@ -84,9 +84,9 @@ export const useDeviceOrientation = () => {
                 setDeviceOrientation(width > height ? 'LANDSCAPE-LEFT' : 'PORTRAIT');
             }
         }
-        const sub = Dimensions.addEventListener('change', handleOrientation);
+        const subsriptionEvent = Dimensions.addEventListener('change', handleOrientation);
         return () => {
-            sub.remove()
+            subsriptionEvent.remove()
         };
     }, []);
     return deviceOrientation;
